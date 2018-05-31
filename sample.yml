@@ -10,7 +10,7 @@ root-node:
       PLUGIN_CHART: ./chart
       PLUGIN_VALUES: >-
         appname=$${DRONE_REPO_NAME},
-        contentservice.repository=cpt-docker-artifactory.gannettdigital.com/$${DRONE_REPO_NAME}:$${VERSION},
+        app.repository=cpt-docker-artifactory.gannettdigital.com/$${DRONE_REPO_NAME}:$${VERSION},
         namespace=core-product-developers-<prefix-full>,
         environments[0].name=ENVIRONMENT,environments[0].value=<environment>,
         environments[1].name=CLOUD,environments[1].value=gke,
@@ -39,7 +39,7 @@ root-node:
       PLUGIN_CHART: ./chart
       PLUGIN_VALUES: >-
         appname=$${DRONE_REPO_NAME},
-        contentservice.repository=cpt-docker-artifactory.gannettdigital.com/$${DRONE_REPO_NAME}:$${VERSION},
+        app.repository=cpt-docker-artifactory.gannettdigital.com/$${DRONE_REPO_NAME}:$${VERSION},
         namespace=<namespace>,
         environments[0].name=ENVIRONMENT,environments[0].value=<environment>,
         environments[1].name=CLOUD,environments[1].value=gke,
