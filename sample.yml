@@ -1,0 +1,59 @@
+root-node:
+  helm-deploy-<prefix-deploy>-push:
+    image: cpt-docker-artifactory.gannettdigital.com/drone/helm-deploy
+    secrets: [ vault_approle_id, vault_approle_secret, <prefix>_api_server, <prefix>_kubernetes_token ]
+    commands:
+      - export VERSION=$(jq -r .versionWithoutBuild version.json)
+      - /bin/drone-helm
+    environment:
+      PLUGIN_SKIP_TLS_VERIFY: "true"
+      PLUGIN_CHART: ./chart
+      PLUGIN_VALUES: >-
+        appname=$${DRONE_REPO_NAME},
+        contentservice.repository=cpt-docker-artifactory.gannettdigital.com/$${DRONE_REPO_NAME}:$${VERSION},
+        namespace=core-product-developers-<prefix-full>,
+        environments[0].name=ENVIRONMENT,environments[0].value=<environment>,
+        environments[1].name=CLOUD,environments[1].value=gke,
+        environments[2].name=CLOUD_DATACENTER,enviroments[2].value=<region>,
+        environments[3].name=VAULT_APPROLE_ID,environments[3].value=$${VAULT_APPROLE_ID},
+        environments[4].name=VAULT_APPROLE_SECRET,environments[4].value=$${VAULT_APPROLE_SECRET} 
+      PLUGIN_UPGRADE: "true"
+      PLUGIN_WAIT: "true"
+      PLUGIN_RELEASE: <prefix-full>
+      PLUGIN_PREFIX: <PREFIX>
+      PLUGIN_TILLER_NS: core-product-developers-<prefix-full>
+      PLUGIN_NAMESPACE: core-product-developers-<prefix-full>
+      PLUGIN_SERVICE_ACCOUNT: <namespace>-admin
+    when:
+      branch: [<branch>]
+      event: [push]
+      success: true    
+  helm-deploy-<prefix-deploy>-deployment:
+    image: cpt-docker-artifactory.gannettdigital.com/drone/helm-deploy
+    secrets: [ vault_approle_id, vault_approle_secret, <prefix>_api_server, <prefix>_kubernetes_token ]
+    commands:
+      - export VERSION=$(jq -r .versionWithoutBuild version.json)
+      - /bin/drone-helm
+    environment:
+      PLUGIN_SKIP_TLS_VERIFY: "true"
+      PLUGIN_CHART: ./chart
+      PLUGIN_VALUES: >-
+        appname=$${DRONE_REPO_NAME},
+        contentservice.repository=cpt-docker-artifactory.gannettdigital.com/$${DRONE_REPO_NAME}:$${VERSION},
+        namespace=<namespace>,
+        environments[0].name=ENVIRONMENT,environments[0].value=<environment>,
+        environments[1].name=CLOUD,environments[1].value=gke,
+        environments[2].name=CLOUD_DATACENTER,enviroments[2].value=<region>,
+        environments[3].name=VAULT_APPROLE_ID,environments[3].value=$${VAULT_APPROLE_ID},
+        environments[4].name=VAULT_APPROLE_SECRET,environments[4].value=$${VAULT_APPROLE_SECRET} 
+      PLUGIN_UPGRADE: "true"
+      PLUGIN_WAIT: "true"
+      PLUGIN_RELEASE: <prefix-full>
+      PLUGIN_PREFIX: <PREFIX>
+      PLUGIN_TILLER_NS: <namespace>
+      PLUGIN_NAMESPACE: <namespace>
+      PLUGIN_SERVICE_ACCOUNT: <namespace>-admin
+    when:
+      environment: [<environment>]
+      event: [deployment]
+      success: true
