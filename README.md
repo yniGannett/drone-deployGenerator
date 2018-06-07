@@ -25,14 +25,12 @@ python ./yml_generator.py
 It will generate `deploy-all.yml` under the path, then you get deployments for different environment
 
 ### Don't forget to do last thing
-deployGenerator is not perfect, we need to adjust the format for `PLUGIN_VALUES`
+deployGenerator is not perfect, we need to adjust the format for `sed commands` for each block
 
-We need to add yaml folded style `>-` to ignore each line break and for pretty
+We need to replace `sed commands` from sample's `sed commands`
 ```
-PLUGIN_VALUES: >-
-appname=$${DRONE_REPO_NAME}
-environments[0].name=ENVIRONMENT,environments[0].value=prod
-...
+- "sed -i 's|name.*|name: '$DRONE_REPO_NAME'|g' .chart/Chart.yaml"
+- "sed -i 's|version.*|version: '$VERSION'|g' .chart/Chart.yaml"
 ```
 
 

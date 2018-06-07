@@ -88,7 +88,7 @@ def transverse_replacer(node, prefix):
 def main():
     prefixes = []
     prefixes.append(
-        {"<prefix>": "staging", "<PREFIX>": "STAGING", "<namespace>": "core-product-developers-development-east",
+        {"<prefix>": "staging", "<PREFIX>": "STAGING", "<namespace>": "core-product-developers-staging-east",
          "<environment>": "staging", "<region>": "us-east4", "<branch>": "staging",
          "<prefix-deploy>": "staging", "<prefix-full>": "staging"})
 
