@@ -90,17 +90,17 @@ def main():
     prefixes.append(
         {"<prefix>": "staging", "<PREFIX>": "STAGING", "<namespace>": "core-product-developers-staging-east",
          "<environment>": "staging", "<region>": "us-east4", "<branch>": "staging",
-         "<prefix-deploy>": "staging", "<prefix-full>": "staging"})
+         "<prefix-deploy>": "staging"})
 
     prefixes.append(
         {"<prefix>": "prod_east", "<PREFIX>": "PROD_EAST", "<namespace>": "core-product-developers-production-east",
          "<environment>": "production", "<region>": "us-east4", "<branch>": "master",
-         "<prefix-deploy>": "prod-east", "<prefix-full>": "production-east"})
+         "<prefix-deploy>": "prod-east"})
 
     prefixes.append(
         {"<prefix>": "prod_west", "<PREFIX>": "PROD_WEST", "<namespace>": "core-product-developers-production-west",
-         "<environment>": "prod", "<region>": "us-west1", "<branch>": "master",
-         "<prefix-deploy>": "prod-west", "<prefix-full>": "production-west"})
+         "<environment>": "production", "<region>": "us-west1", "<branch>": "master",
+         "<prefix-deploy>": "prod-west"})
 
     yaml_maker = Orderedyaml()
 
